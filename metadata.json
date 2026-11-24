@@ -1,0 +1,6 @@
+{
+  "name": "SAHIH Verify - Escalate AI",
+  "description": "Autonomous multi-agent claim verification platform for Malaysia with Admiralty source grading, BM/Manglish intake, and Google Gemini grounding.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

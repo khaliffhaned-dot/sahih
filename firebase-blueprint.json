@@ -1,0 +1,116 @@
+{
+  "entities": {
+    "VerificationSession": {
+      "title": "Verification Session",
+      "description": "Represents a multi-agent verification session run by an analyst.",
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "claim": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "verdict": {
+          "type": "string",
+          "enum": ["Verified", "Disputed", "Misleading", "Unsubstantiated", "Needs Clarification"]
+        },
+        "confidence": {
+          "type": "number"
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["sessionId", "claim", "verdict", "confidence", "userId", "createdAt"]
+    },
+    "VerificationRecord": {
+      "title": "Verification Record",
+      "description": "Detailed multi-agent telemetry and source grounding records.",
+      "type": "object",
+      "properties": {
+        "recordId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "sessionId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["recordId", "sessionId", "summary", "userId", "createdAt"]
+    },
+    "AnalystFeedback": {
+      "title": "Analyst Feedback",
+      "description": "Human feedback recorded by analysts on verification outcomes.",
+      "type": "object",
+      "properties": {
+        "feedbackId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "sessionId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "status": {
+          "type": "string",
+          "enum": ["accepted", "disputed"]
+        },
+        "comment": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["feedbackId", "sessionId", "status", "userId", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/sessions/{sessionId}": {
+      "schema": {
+        "$ref": "VerificationSession"
+      },
+      "description": "Verification sessions stored in Firestore."
+    },
+    "/records/{recordId}": {
+      "schema": {
+        "$ref": "VerificationRecord"
+      },
+      "description": "Detailed telemetry records."
+    },
+    "/feedback/{feedbackId}": {
+      "schema": {
+        "$ref": "AnalystFeedback"
+      },
+      "description": "Analyst feedback records."
+    }
+  }
+}
